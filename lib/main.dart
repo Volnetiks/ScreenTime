@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'extensions/hex_color.dart';
+import 'models/app_model.dart';
+
 void main() {
   runApp(const ScreenTime());
 }
@@ -28,38 +31,42 @@ class ScreenTimePage extends StatefulWidget {
 }
 
 class _ScreenTimePageState extends State<ScreenTimePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor.fromHex("#f6f5fa"),
       appBar: AppBar(
-        title: Text("Screen Time"),
+        elevation: 0,
+        backgroundColor: HexColor.fromHex("#f6f5fa"),
+        title: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text("Screen Time",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w500)),
+              Text("Last Week",
+                  style: TextStyle(color: Colors.purple, fontSize: 14)),
+            ]),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: ListView.builder(
+                    padding: const EdgeInsets.all(8),
+                    itemCount: 5,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AppModel(index: index);
+                    })),
+          )
+        ],
       ),
     );
   }
