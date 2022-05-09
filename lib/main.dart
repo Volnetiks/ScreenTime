@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'extensions/hex_color.dart';
 import 'models/app_model.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 void main() {
   runApp(const ScreenTime());
@@ -31,6 +32,41 @@ class ScreenTimePage extends StatefulWidget {
 }
 
 class _ScreenTimePageState extends State<ScreenTimePage> {
+  late List<_ChartData> data;
+  late TooltipBehavior _tooltip;
+
+  @override
+  void initState() {
+    data = [
+      _ChartData('12am', 12),
+      _ChartData('1am', 12),
+      _ChartData('2am', 15),
+      _ChartData('3am', 30),
+      _ChartData('4am', 6.4),
+      _ChartData('5am', 14),
+      _ChartData('6am', 12),
+      _ChartData('7am', 15),
+      _ChartData('8am', 30),
+      _ChartData('9am', 6.4),
+      _ChartData('10am', 14),
+      _ChartData('11am', 12),
+      _ChartData('12pm', 15),
+      _ChartData('1pm', 30),
+      _ChartData('2pm', 6.4),
+      _ChartData('3pm', 14),
+      _ChartData('4pm', 12),
+      _ChartData('5pm', 15),
+      _ChartData('6pm', 30),
+      _ChartData('7pm', 6.4),
+      _ChartData('8pm', 14),
+      _ChartData('9pm', 12),
+      _ChartData('10pm', 15),
+      _ChartData('11pm', 30)
+    ];
+    _tooltip = TooltipBehavior(enable: true);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,15 +91,28 @@ class _ScreenTimePageState extends State<ScreenTimePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-              height: 225,
+              height: 300,
               color: Colors.white,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+              child: Column(
+                children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 15, left: 20, bottom: 15),
-                    child: Text("2h 15min",
-                        style: TextStyle(color: Colors.black, fontSize: 20)),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: SfCartesianChart(
+                        primaryXAxis:
+                            CategoryAxis(opposedPosition: true, interval: 6),
+                        primaryYAxis: NumericAxis(
+                            minimum: 0,
+                            maximum: 60,
+                            interval: 10,
+                            isVisible: false),
+                        tooltipBehavior: _tooltip,
+                        series: <ChartSeries<_ChartData, String>>[
+                          ColumnSeries<_ChartData, String>(
+                              dataSource: data,
+                              xValueMapper: (_ChartData data, _) => data.x,
+                              yValueMapper: (_ChartData data, _) => data.y,
+                              color: const Color.fromRGBO(8, 142, 255, 1))
+                        ]),
                   )
                 ],
               )),
@@ -96,4 +145,11 @@ class _ScreenTimePageState extends State<ScreenTimePage> {
       ),
     );
   }
+}
+
+class _ChartData {
+  _ChartData(this.x, this.y);
+
+  final String x;
+  final double y;
 }
