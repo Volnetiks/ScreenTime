@@ -26,21 +26,31 @@ class _AppModelState extends State<AppModel> {
             )
           : const BoxDecoration(color: Colors.white),
       height: 50,
-      child: Row(children: [
-        const SizedBox(
-          width: 10,
-        ),
-        Container(
-            height: 35,
-            width: 35,
-            decoration: const BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.all(Radius.circular(5.0)))),
-        const SizedBox(
-          width: 15,
-        ),
-        const Text("Netflix")
-      ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(children: [
+            const SizedBox(
+              width: 10,
+            ),
+            Container(
+                height: 35,
+                width: 35,
+                decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)))),
+            const SizedBox(
+              width: 15,
+            ),
+            const Text("Netflix")
+          ]),
+          Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child:
+                Text("1h 42m", style: TextStyle(color: Colors.grey.shade400)),
+          )
+        ],
+      ),
     );
   }
 }
