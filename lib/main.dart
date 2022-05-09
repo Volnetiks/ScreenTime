@@ -98,8 +98,20 @@ class _ScreenTimePageState extends State<ScreenTimePage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: SfCartesianChart(
-                        primaryXAxis:
-                            CategoryAxis(opposedPosition: true, interval: 6),
+                        primaryXAxis: CategoryAxis(
+                            opposedPosition: true,
+                            interval: 6,
+                            majorTickLines:
+                                const MajorTickLines(color: Colors.white),
+                            axisLine: const AxisLine(color: Colors.white),
+                            labelPosition: ChartDataLabelPosition.inside,
+                            labelsExtent: 300,
+                            labelAlignment: LabelAlignment.end,
+                            labelStyle: TextStyle(
+                                color: Colors.grey.shade400,
+                                fontWeight: FontWeight.bold),
+                            majorGridLines: MajorGridLines(
+                                width: 0.5, color: Colors.grey.shade200)),
                         primaryYAxis: NumericAxis(
                             minimum: 0,
                             maximum: 60,
@@ -108,6 +120,10 @@ class _ScreenTimePageState extends State<ScreenTimePage> {
                         tooltipBehavior: _tooltip,
                         series: <ChartSeries<_ChartData, String>>[
                           ColumnSeries<_ChartData, String>(
+                              spacing: 0.25,
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(90),
+                                  topRight: Radius.circular(90)),
                               dataSource: data,
                               xValueMapper: (_ChartData data, _) => data.x,
                               yValueMapper: (_ChartData data, _) => data.y,
